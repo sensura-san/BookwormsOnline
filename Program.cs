@@ -70,9 +70,9 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-//app.UseMiddleware<SessionValidationMiddleware>();
-
 app.UseSession();
+
+app.UseMiddleware<SessionValidationMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

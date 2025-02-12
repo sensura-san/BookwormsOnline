@@ -16,6 +16,7 @@ namespace WebApplication1.Pages
         AuditService auditService
         ) : PageModel
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
         private readonly SessionService _sessionService = sessionService;
         private readonly AuditService _auditService = auditService;
@@ -42,11 +43,11 @@ namespace WebApplication1.Pages
                     var sessionId = Guid.NewGuid().ToString();
 
                     // Store session in database
-                    await _sessionService.CreateSessionAsync(user.Id, sessionId);
+                     _sessionService.CreateSessionAsync(user.Id, sessionId);
 
                     // Store session ID in ASP.NET Core session
-                    HttpContext.Session.SetString("SessionId", sessionId);
-                    HttpContext.Session.SetString("UserId", user.Id);
+                    _httpContextAccessor.HttpContext.Session.SetString("SessionId", sessionId);
+                    _httpContextAccessor.HttpContext.Session.SetString("UserId", user.Id);
 
                     // Audit log
                     await _auditService.LogActivity(Convert.ToInt32(user.Id), "User logged in");

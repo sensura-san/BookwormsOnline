@@ -40,7 +40,7 @@ namespace WebApplication1.ViewModels
         [Required]
         [DataType(DataType.Password)]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 12)]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{12,}$",
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).*$",
             ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.")]
         [Display(Name = "Password")]
         public string Password { get; set; }
