@@ -53,7 +53,7 @@ namespace WebApplication1.ViewModels
         [Required]
         [Display(Name = "Profile Photo")]
         [DataType(DataType.Upload)]
-        [AllowedExtensions(new string[] { ".jpg", ".jpeg" })]
+        //[AllowedExtensions(new string[] { ".jpg", ".jpeg" })]
         public IFormFile Photo { get; set; }
     }
 

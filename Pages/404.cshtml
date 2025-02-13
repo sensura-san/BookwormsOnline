@@ -1,0 +1,13 @@
+﻿@page
+@model WebApplication1.Pages._404Model
+@{
+    Layout = "_Layout"; // Use your layout page, or remove if not needed
+    Response.StatusCode = 200;
+    ViewData["Title"] = "Page Not Found";
+}
+
+<div class="container mt-5 text-center">
+    <h1 class="display-4">404</h1>
+    <p class="lead">Oops! The page you are looking for cannot be found.</p>
+    <a href="/" class="btn btn-primary">Return Home</a>
+</div>

@@ -1,10 +1,35 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h2>Welcome, @Model.UserFirstName to the bookworms online page!</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <!-- Display User Information -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Your Profile</h5>
+                <p class="card-text">
+                    <strong>Name:</strong> @Model.UserFirstName @Model.UserLastName<br />
+                    <strong>Email:</strong> @Model.UserEmail<br />
+                    <strong>Mobile Number:</strong> @Model.UserMobileNumber<br />
+                    <strong>Billing Address:</strong> @Model.UserBillingAddress<br />
+                    <strong>Shipping Address:</strong> @Model.UserShippingAddress<br />
+                    <strong>Encrypted Credit Card No.</strong> @Model.UserEncryptedCreditCardNo<br/>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <!-- Display Profile Photo -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Profile Photo</h5>
+                <img src="~/uploads/@Model.UserPhotoPath" alt="Profile Photo" class="img-fluid" />
+            </div>
+        </div>
+    </div>
 </div>

@@ -9,12 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+builder.Services.AddDbContext<ApplicationDbContext>();
 // singleton for DI
 builder.Services.AddSingleton<AesEncryptionService, AesEncryptionService>();
 builder.Services.AddScoped<AuditService, AuditService>();
 builder.Services.AddScoped<SessionService, SessionService>();
-
-builder.Services.AddDbContext<ApplicationDbContext>();
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
@@ -40,6 +39,7 @@ builder.Services.AddSession(options =>
     options.Cookie.SameSite = SameSiteMode.Strict;
 });
 
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication("MyCookieAuth").AddCookie("MyCookieAuth", options
 =>
@@ -76,6 +76,40 @@ app.UseMiddleware<SessionValidationMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseStatusCodePages(async context =>
+{
+    var response = context.HttpContext.Response;
+    var requestPath = context.HttpContext.Request.Path.Value;
+    var statusCode = response.StatusCode;
+
+    // Check if we're already on an error page
+    if (requestPath.StartsWith("/404") ||
+        requestPath.StartsWith("/500") ||
+        requestPath.StartsWith("/401"))
+    {
+        return;
+    }
+
+    switch (statusCode)
+    {
+        case 401:
+            response.Redirect("/401");
+            break;
+        case 404:
+            response.Redirect("/404");
+            break;
+        case 500:
+            response.Redirect("/500");
+            break;
+        default:
+            response.Redirect("/404");
+            break;
+    }
+
+    await Task.CompletedTask;
+});
+
+
 
 app.UseRouting();
 

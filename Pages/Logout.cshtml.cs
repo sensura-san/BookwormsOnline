@@ -9,19 +9,14 @@ using WebApplication1.Services;
 namespace WebApplication1.Pages
 {
     // Logout.cshtml.cs
-    public class LogoutModel : PageModel
+    public class LogoutModel(
+SignInManager<ApplicationUser> signInManager,
+SessionService sessionService,
+ApplicationDbContext context) : PageModel
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly SessionService _sessionService;
-        private readonly ApplicationDbContext _context;
-
-        public LogoutModel(
-            SignInManager<ApplicationUser> signInManager,
-            SessionService sessionService)
-        {
-            _signInManager = signInManager;
-            _sessionService = sessionService;
-        }
+        private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
+        private readonly SessionService _sessionService = sessionService;
+        private readonly ApplicationDbContext _context = context;
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -34,6 +29,7 @@ namespace WebApplication1.Pages
 
             // Clear ASP.NET Core session
             HttpContext.Session.Clear();
+
 
             // Sign out
             await _signInManager.SignOutAsync();

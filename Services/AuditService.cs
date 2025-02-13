@@ -8,7 +8,7 @@ namespace WebApplication1.Services
 
         public AuditService(ApplicationDbContext context) => _context = context;
 
-        public async Task LogActivity(int userId, string activity)
+        public async Task LogActivity(string userId, string activity)
         {
             _context.AuditLogs.Add(new AuditLog
             {

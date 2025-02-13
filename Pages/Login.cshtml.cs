@@ -43,23 +43,30 @@ namespace WebApplication1.Pages
                     var sessionId = Guid.NewGuid().ToString();
 
                     // Store session in database
-                     _sessionService.CreateSessionAsync(user.Id, sessionId);
+                    await _sessionService.CreateSessionAsync(user.Id, sessionId);
 
                     // Store session ID in ASP.NET Core session
-                    _httpContextAccessor.HttpContext.Session.SetString("SessionId", sessionId);
-                    _httpContextAccessor.HttpContext.Session.SetString("UserId", user.Id);
+                    HttpContext.Session.SetString("SessionId", sessionId);
+                    HttpContext.Session.SetString("UserId", user.Id);
 
                     // Audit log
-                    await _auditService.LogActivity(Convert.ToInt32(user.Id), "User logged in");
+                    await _auditService.LogActivity(user.Id, "User logged in");
 
                     return RedirectToPage("/Index");
                 }
+                else if (result.IsLockedOut)
+                {
+                    // Lockout error
+                    ModelState.AddModelError(string.Empty, "Your account has been locked out due to multiple failed login attempts. Please try again later.");
+                }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt");
+                    // Invalid login attempt
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 }
             }
             return Page();
         }
+
     }
 }

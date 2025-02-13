@@ -1,0 +1,14 @@
+﻿@page
+@model _500Model
+@{
+    Layout = "_Layout"; // Use your layout page, or remove if not needed
+    Response.StatusCode = 200;
+    ViewData["Title"] = "Server Error";
+}
+
+<div class="container mt-5 text-center">
+    <h1 class="display-4">500</h1>
+    <p class="lead">Sorry, something went wrong on our end.</p>
+    <a href="/" class="btn btn-primary">Return Home</a>
+</div>
+W

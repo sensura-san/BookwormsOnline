@@ -70,7 +70,7 @@ namespace WebApplication1.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
+            
             migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
