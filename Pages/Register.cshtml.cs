@@ -1,4 +1,4 @@
-using WebApplication1.Model;
+using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +6,9 @@ using System.ComponentModel.DataAnnotations;
 using WebApplication1.Services;
 using WebApplication1.Attributes;
 using WebApplication1.ViewModels;
+using System.IO;
+using System.Web;
+using WebApplication1.Model;
 
 namespace WebApplication1.Pages
 {
@@ -18,7 +21,6 @@ namespace WebApplication1.Pages
         private readonly AesEncryptionService _encryptionService = encryptionService;
         private readonly IWebHostEnvironment _environment = environment;
 
-        // this probs binds the viewmodel to the page????
         [BindProperty]
         public Register Input { get; set; }
 
@@ -31,6 +33,15 @@ namespace WebApplication1.Pages
         {
             if (ModelState.IsValid)
             {
+                // HTML encode inputs to prevent XSS
+                Input.Email = HttpUtility.HtmlEncode(Input.Email);
+                Input.FirstName = HttpUtility.HtmlEncode(Input.FirstName);
+                Input.LastName = HttpUtility.HtmlEncode(Input.LastName);
+                Input.MobileNumber = HttpUtility.HtmlEncode(Input.MobileNumber);
+                Input.BillingAddress = HttpUtility.HtmlEncode(Input.BillingAddress);
+                Input.ShippingAddress = HttpUtility.HtmlEncode(Input.ShippingAddress);
+                Input.CreditCardNo = HttpUtility.HtmlEncode(Input.CreditCardNo);
+
                 // Handle file upload
                 if (Input.Photo != null && Input.Photo.Length > 0)
                 {

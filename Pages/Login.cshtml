@@ -1,23 +1,39 @@
 ﻿@page
 @model WebApplication1.Pages.LoginModel
 @{
+    Layout = "_Layout";
+    var message = Request.Query["message"];
 }
-<form method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
 
-    <div class="mb-3">
-        <label class="form-label" asp-for="Input.Email">Email Address</label>
-        <input type="text" asp-for="Input.Email" class="form-control" />
-        <span asp-validation-for="Input.Email" class="text-danger"></span>
-    </div>
+<div class="container mt-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-sm-12 col-md-12 col-lg-4">
+            <h1 class="mb-3">Login</h1>
 
-    <div class="mb-3">
-        <label class="form-label" asp-for="Input.Password">Password</label>
-        <input type="password" asp-for="Input.Password" class="form-control" />
-        <span asp-validation-for="Input.Password" class="text-danger"></span>
-    </div>
+            @if (!string.IsNullOrEmpty(message) && message == "logged_out")
+            {
+                <div class="alert alert-warning" role="alert">
+                    You have been logged out due to inactivity or session expiration.
+                </div>
+            }
 
-    <div class="mb-3">
-        <button type="submit" class="btn btn-primary">Login</button>
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label" asp-for="Input.Email">Email Address</label>
+                    <input type="text" asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" asp-for="Input.Password">Password</label>
+                    <input type="password" asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+        </div>
     </div>
-</form>
+</div>

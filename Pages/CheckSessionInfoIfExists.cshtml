@@ -1,0 +1,16 @@
+﻿@page
+@model WebApplication1.Pages.CheckSessionInfoIfExistsModel
+@{
+    var sessionId = HttpContext.Session.GetString("SessionId");
+    var userId = HttpContext.Session.GetString("UserId");
+}
+
+@if (string.IsNullOrEmpty(sessionId) && string.IsNullOrEmpty(userId))
+{
+    <h1>Session info does not exist.</h1>
+}
+else
+{
+    <h1>Session ID: @sessionId</h1>
+    <h1>User ID: @userId</h1>
+}

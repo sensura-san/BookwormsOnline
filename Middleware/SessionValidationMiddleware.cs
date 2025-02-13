@@ -4,7 +4,6 @@ using WebApplication1.Services;
 
 namespace WebApplication1.Middleware
 {
-    // SessionValidationMiddleware.cs
     public class SessionValidationMiddleware
     {
         private readonly RequestDelegate _next;
@@ -26,13 +25,16 @@ namespace WebApplication1.Middleware
                     // Session is invalid - force logout
                     await context.SignOutAsync(IdentityConstants.ApplicationScheme);
                     context.Session.Clear();
-                    context.Response.Redirect("/Login");
+
+                    // Redirect to login page with a query parameter
+                    context.Response.Redirect("/Login?message=logged_out");
                     return;
                 }
             }
 
             await _next(context);
         }
-}
-
     }
+
+
+}
