@@ -26,5 +26,7 @@ namespace WebApplication1.Model
 
         // Photo file name or path (JPG only, enforced on upload)
         public string PhotoPath { get; set; }
+        //public DateTime PasswordChangedDate { get; set; }
+
     }
 }

@@ -24,10 +24,15 @@ namespace WebApplication1.Pages
         [BindProperty]
         public Register Input { get; set; }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            Console.WriteLine("Checkpoint: Returning Page()");
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToPage("/Index"); // Redirect to index if already logged in
+            }
+            return Page();
         }
+
 
         public async Task<IActionResult> OnPostAsync()
         {

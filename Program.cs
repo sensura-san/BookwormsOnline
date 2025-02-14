@@ -24,7 +24,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     options.Password.RequireNonAlphanumeric = true;
 
     options.Lockout.MaxFailedAccessAttempts = 3;
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
@@ -35,7 +35,7 @@ builder.Services.AddSession(options =>
 {
     options.Cookie.HttpOnly = true;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    options.IdleTimeout = TimeSpan.FromMinutes(20);
+    options.IdleTimeout = TimeSpan.FromMinutes(1);
     options.Cookie.SameSite = SameSiteMode.Strict;
 });
 
@@ -71,7 +71,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseSession();
-
 app.UseMiddleware<SessionValidationMiddleware>();
 
 app.UseHttpsRedirection();
@@ -108,9 +107,6 @@ app.UseStatusCodePages(async context =>
 
     await Task.CompletedTask;
 });
-
-
-
 app.UseRouting();
 
 app.UseAuthentication();

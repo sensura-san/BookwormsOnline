@@ -17,6 +17,7 @@ namespace WebApplication1.Model
 
         public DbSet<UserSession> UserSessions { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }
+        //public DbSet<UserPasswordHistory> UserPasswordHistories { get; set; }
     }
 
 }
